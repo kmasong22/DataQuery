@@ -9,6 +9,7 @@ class DQX{
 	public $sqlWhere = null;
 	public $sqlSort = null;
 	public $sqlGroup = null;
+	public $sqlHaving = null;
 	public $sqlLimit = null;
 	public $sqlJoin = null;
 	public $sqlDeleteFrom = null;
@@ -58,6 +59,9 @@ class DQX{
 	}
 	public function sqlGroup($qry){
 		$this->sqlGroup .= $this->sqlGroup == null ? " {$qry}" : ", {$qry}";
+	}
+	public function sqlHaving($qry){
+		$this->sqlHaving .= $this->sqlHaving == null ? " {$qry}" : ", {$qry}";
 	}
 	public function sqlDeleteFrom($qry){
 		$this->sqlDeleteFrom = $qry;
@@ -121,9 +125,9 @@ class DQX{
 			}else{
 				$this->sqlSelect = $this->sqlSelect == null ? '*' : $this->sqlSelect ;
 				if( $this->dbsql == 'mssql' ){
-					$buildQuery = "SELECT {$this->sqlLimit} {$this->sqlSelect} FROM {$this->sqlFrom} {$this->sqlJoin} {$this->sqlWhere} {$this->sqlGroup} {$this->sqlSort}" ;
+					$buildQuery = "SELECT {$this->sqlLimit} {$this->sqlSelect} FROM {$this->sqlFrom} {$this->sqlJoin} {$this->sqlWhere} {$this->sqlGroup} {$this->sqlHaving} {$this->sqlSort}" ;
 				}else{
-					$buildQuery = "SELECT {$this->sqlSelect} FROM {$this->sqlFrom} {$this->sqlJoin} {$this->sqlWhere} {$this->sqlGroup} {$this->sqlSort} {$this->sqlLimit}" ;
+					$buildQuery = "SELECT {$this->sqlSelect} FROM {$this->sqlFrom} {$this->sqlJoin} {$this->sqlWhere} {$this->sqlGroup} {$this->sqlHaving} {$this->sqlSort} {$this->sqlLimit}" ;
 				}
 				$sqlDDL = false;
 			}
