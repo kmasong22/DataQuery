@@ -18,6 +18,7 @@ Just import the class.dqx.php into your codes and start using
 * DELETE
 
 ## Directives
+* sqlQuery -> Used to create custom SQL Query
 * sqlSelect -> Used to do a Select function
 * sqlFrom -> Used to specify which table to fetch
 * sqlJoin -> Used to do joins
