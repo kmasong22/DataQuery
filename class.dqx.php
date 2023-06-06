@@ -1,4 +1,6 @@
 <?php
+// DQX Plugin
+// Version 0.1.11
 
 class DQX{
 
@@ -109,19 +111,14 @@ class DQX{
 
 			if( $this->sqlQuery != null ){
 				$buildQuery = $this->sqlQuery ;
-				$sqlDDL = false;
 			}elseif( $this->sqlDeleteFrom != null ){
 				$buildQuery = "DELETE FROM {$this->sqlDeleteFrom} {$this->sqlWhere}";
-				$sqlDDL = true;
 			}elseif( $this->sqlUpdate != null && $this->sqlWhere != null && $this->sqlSet != null ){
 				$buildQuery = "UPDATE {$this->sqlUpdate} SET {$this->sqlSet} {$this->sqlWhere}";
-				$sqlDDL = true;
 			}elseif( $this->sqlInsertInto != null && $this->sqlSetMulti != null ){
 				$buildQuery = "{$this->sqlSetMulti}";
-				$sqlDDL = true;
 			}elseif( $this->sqlInsertInto != null ){
 				$buildQuery = "INSERT INTO {$this->sqlInsertInto} ({$this->sqlSetKeys}) VALUES ({$this->sqlSetValues})";
-				$sqlDDL = true;
 			}else{
 				$this->sqlSelect = $this->sqlSelect == null ? '*' : $this->sqlSelect ;
 				if( $this->dbsql == 'mssql' ){
@@ -129,16 +126,15 @@ class DQX{
 				}else{
 					$buildQuery = "SELECT {$this->sqlSelect} FROM {$this->sqlFrom} {$this->sqlJoin} {$this->sqlWhere} {$this->sqlGroup} {$this->sqlHaving} {$this->sqlSort} {$this->sqlLimit}" ;
 				}
-				$sqlDDL = false;
 			}
 			
 			$buildQuery = preg_replace('/\s+/', ' ', $buildQuery);
 			$sqlite = $this->sqlConn ;
 			$sqlite = $sqlite->prepare( $buildQuery );
 			$sqlite->execute();
+			$sqliteRow = $sqlite->fetchAll(PDO::FETCH_ASSOC);
 
-			if(	$sqlDDL == false ){
-				$sqliteRow = $sqlite->fetchAll(PDO::FETCH_ASSOC);
+			if(	is_array( $sqliteRow ) ){
 
 				if( count( $sqliteRow ) > 0){
 					$response['data'] = $sqliteRow ;
