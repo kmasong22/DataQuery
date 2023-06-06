@@ -1,5 +1,5 @@
 # DataQuery
-A Very Simple ORM for PHP for postgreSQL, MySQL, Microsoft SQL Server, and SQLIte
+A Very Simple ORM for PHP for postgreSQL, MySQL, Microsoft SQL Server, and SQLite
 
 ## How To Use
 Just import the class.dqx.php into your codes and start using
